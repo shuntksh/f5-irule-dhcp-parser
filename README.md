@@ -1,4 +1,4 @@
-f5_dhcp_sampler_irule
+f5_dhcp_avp_irule
 =====================
 
-iRule to parse DHCP option field and extract all the option value pairs
+An iRule to parse DHCP packet to extract option field into session table for log enrichment and traffic steering.
