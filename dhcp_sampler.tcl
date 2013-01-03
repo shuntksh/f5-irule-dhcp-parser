@@ -110,6 +110,8 @@ when CLIENT_DATA {
           binary scan $value_hex a2a* ht id
           switch $ht {
             01 {
+              # Etherenet Type
+              # Convert raw hexadecimal into MAC address format
               binary scan $id a2a2a2a2a2a2 m(a) m(b) m(c) m(d) m(e) m(f)
               set value "$m(a):$m(b):$m(c):$m(d):$m(e):$m(f)"
             } 
