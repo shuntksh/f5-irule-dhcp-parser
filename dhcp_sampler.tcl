@@ -18,10 +18,10 @@
 #   Requirement: 
 #
 #
-#   RFC 2132 DHCP Options and BOOTP Vendor Extensions
-#   RFC 1533 DHCP Options and BOOTP Vendor Extensions (Obsolated)
-#	RFC 4702 The Dynamic Host Configuration Protocol (DHCP) Client
-#             Fully Qualified Domain Name (FQDN) Option
+#   Reference:   RFC 2132 DHCP Options and BOOTP Vendor Extensions
+#                RFC 1533 DHCP Options and BOOTP Vendor Extensions (Obsolated)
+#                RFC 4702 The Dynamic Host Configuration Protocol (DHCP) Client
+#                         Fully Qualified Domain Name (FQDN) Option
 #
 #
 timing off
@@ -43,11 +43,10 @@ when RULE_INIT {
 
 when CLIENT_DATA {
 
-	if {$DBG}{log local0.debug "$log_prefix_d  ***** iRule: \
-		$static::RULE_NAME executed *****"}
+	if {$DBG}{log local0.debug "$log_prefix_d  ***** iRule: $static::RULE_NAME executed *****"}
 
 	if { [UDP::payload length] < 200 } { 
-		log local0.info "$log_prefix Ignored due to length\(less than 200 octet\)" 
+		log local0.info "$log_prefix Not a DHCP packet\(less than 200 octet\)" 
 		drop 
 		return 
 	} else { 
@@ -79,24 +78,28 @@ when CLIENT_DATA {
 			switch $option {
 				
 				12 {
+				#
 				# Host Name
+				#
 				# This option specifies the name of the client.  The name may or may
-                # not be qualified with the local domain name.
+        # not be qualified with the local domain name.
 				#
 				#    Code   Len                 Host Name
 				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
 				#   |  12 |  n  |  h1 |  h2 |  h3 |  h4 |  h5 |  h6 |  ...
 				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
 				#
-					for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
-						set temp_hex [string range $value_hex $j [expr {$j + 1}]]
-						set temp_ascii [binary format c* [expr 0x$temp_hex]]
-						append value $temp_ascii
-					}
+				for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
+					set temp_hex [string range $value_hex $j [expr {$j + 1}]]
+					set temp_ascii [binary format c* [expr 0x$temp_hex]]
+					append value $temp_ascii
+				}
 				}
 				
 				50 { 
+				#
 				# Requested IP Address
+				#
 				# This option is used in a client request (DHCPDISCOVER) to allow the
 				# client to request that a particular IP address be assigned.
 				#
@@ -105,12 +108,14 @@ when CLIENT_DATA {
 				#   |  50 |  4  |  a1 |  a2 |  a3 |  a4 |
 				#   +-----+-----+-----+-----+-----+-----+
 				#
-					scan $value_hex %2x%2x%2x%2x a b c d  
-					set value "$a.$b.$c.$d"
+				scan $value_hex %2x%2x%2x%2x a b c d  
+				set value "$a.$b.$c.$d"
 				}
 				
 				53 { 
+				#
 				# DHCP Message Type
+				#
 				# This option is used to convey the type of the DHCP message.
 				#
 				#    Code   Len  Type
@@ -118,21 +123,23 @@ when CLIENT_DATA {
 				#   |  53 |  1  | 1-7 |
 				#   +-----+-----+-----+
 				#
-					switch $value_hex {
-						01 { set value "DHCP_DISCOVER" }
-						02 { set value "DHCP_OFFER" }
-						03 { set value "DHCP_REQUEST" }
-						04 { set value "DHCP_DECLINE" }
-						05 { set value "DHCP_ACK" }
-						06 { set value "DHCP_NAK" }
-						07 { set value "DHCP_RELEASE" }
-						08 { set value "DHCP_INFORM" }
-						default { set value "NO_MATCH\($value_hex\)" }
-					}
+				switch $value_hex {
+					01 { set value "DHCP_DISCOVER" }
+					02 { set value "DHCP_OFFER" }
+					03 { set value "DHCP_REQUEST" }
+					04 { set value "DHCP_DECLINE" }
+					05 { set value "DHCP_ACK" }
+					06 { set value "DHCP_NAK" }
+					07 { set value "DHCP_RELEASE" }
+					08 { set value "DHCP_INFORM" }
+					default { set value "NO_MATCH\($value_hex\)" }
+				}
 				}
 				
 				54 {
+				#
 				# DHCP Server Identifier
+				#
 				# This option is used in DHCPOFFER and DHCPREQUEST messages, and may
 				# optionally be included in the DHCPACK and DHCPNAK messages.  DHCP
 				# servers include this option in the DHCPOFFER in order to allow the
@@ -143,12 +150,14 @@ when CLIENT_DATA {
 				#  |  54 |  4  |  a1 |  a2 |  a3 |  a4 |
 				#  +-----+-----+-----+-----+-----+-----+
 				#
-					scan $value_hex %2x%2x%2x%2x a b c d  
-					set value "$a.$b.$c.$d"
+				scan $value_hex %2x%2x%2x%2x a b c d  
+				set value "$a.$b.$c.$d"
 				}
 				
 				60 {
+				#
 				# Vendor Class Identifier
+				#
 				# This option is used by DHCP clients to optionally identify the type
 				# and configuration of a DHCP client.  The information is a string of n
 				# octets, interpreted by servers.  Vendors and sites may choose to
@@ -160,15 +169,17 @@ when CLIENT_DATA {
 				#  |  60 |  n  |  i1 |  i2 | ...
 				#  +-----+-----+-----+-----+---
 				#
-					for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
-						set temp_hex [string range $value_hex $j [expr {$j + 1}]]
-						set temp_ascii [binary format c* [expr 0x$temp_hex]]
-						append value $temp_ascii
-					}
+				for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
+					set temp_hex [string range $value_hex $j [expr {$j + 1}]]
+					set temp_ascii [binary format c* [expr 0x$temp_hex]]
+					append value $temp_ascii
+				}
 				}
 				
 				61 { 
+				#
 				# Client Identifier
+				#
 				# This option is used by DHCP clients to specify their unique
 				# identifier.  DHCP servers use this value to index their database of
 				# address bindings.  This value is expected to be unique for all
@@ -179,21 +190,24 @@ when CLIENT_DATA {
 				#   |  61 |  n  |  t1 |  i1 |  i2 | ...
 				#   +-----+-----+-----+-----+-----+---
 				#
-					binary scan $value_hex a2a* ht id
-					switch $ht {
-						01 {
-							binary scan $id a2a2a2a2a2a2 m(a) m(b) m(c) m(d) m(e) m(f)
-							set value "$m(a):$m(b):$m(c):$m(d):$m(e):$m(f)"
-						} 
-						
-						default {
-							set value "$id"
-						}
+				binary scan $value_hex a2a* htype id
+				switch $htype {
+					01 {
+						# Ethernet (MAC format)
+						binary scan $id a2a2a2a2a2a2 m(a) m(b) m(c) m(d) m(e) m(f)
+						set value "$m(a):$m(b):$m(c):$m(d):$m(e):$m(f)"
+					} 
+					
+					default {
+						set value "$id"
 					}
+				}
 				}
 				
 				81 {
+				#
 				# Client Fully Qualified Domain Name
+				#
 				# To update the IP address to FQDN mapping a DHCP server needs to know
 				# the FQDN of the client to which the server leases the address.  To
 				# allow the client to convey its FQDN to the server this document
@@ -219,10 +233,13 @@ when CLIENT_DATA {
 				}
 				
 				255 { 
+				#
 				# End Option
+				#
 				# The end option marks the end of valid information in the vendor
 				# field.  Subsequent octets should be filled with pad options.
-					return
+				#
+				return	
 				}
 			}
 		
