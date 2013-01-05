@@ -25,7 +25,7 @@
 #
 #
 timing off
-when RULE_INIT {
+when CLIENT_ACCEPTED {
 
 	# Rule Name and Version shown in the log
 	set static::RULE_NAME "Simple DHCP Option Sampler v0.1"
@@ -76,7 +76,94 @@ when CLIENT_DATA {
 
 			set value ""
 			switch $option {
+
+				1 {
+				#
+				# Subnet Mask
+				#
+				# The subnet mask option specifies the client's subnet mask as per RFC
+				#   950 [5].
+				#
+				#    Code   Len        Subnet Mask
+				#   +-----+-----+-----+-----+-----+-----+
+				#   |  1  |  4  |  m1 |  m2 |  m3 |  m4 |
+				#   +-----+-----+-----+-----+-----+-----+
+				#
+				scan $value_hex %2x%2x%2x%2x m1 m2 m3 m4  
+				set value "$m1.$m2.$m3.$m4"
+				}
 				
+				3 {
+				#
+				# Router
+				#
+				# The router option specifies a list of IP addresses for routers on the
+				# client's subnet.  Routers SHOULD be listed in order of preference.
+				#
+				#    Code   Len         Address 1               Address 2
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#   |  3  |  n  |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 |  ...
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#
+
+				## TODO ##
+
+				}
+
+				4 {
+				#
+				# Time Server
+				#
+				# The time server option specifies a list of RFC 868 [6] time servers
+				# available to the client.  Servers SHOULD be listed in order of
+        # preference.
+				#
+				#    Code   Len         Address 1               Address 2
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#   |  4  |  n  |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 |  ...
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#
+
+				## TODO ##
+
+				}
+
+				5 {
+				#
+				# Name Server
+				#
+				# The domain name server option specifies a list of Domain Name System
+				# (STD 13, RFC 1035 [8]) name servers available to the client.  Servers
+				# SHOULD be listed in order of preference.
+				#
+				#    Code   Len         Address 1               Address 2
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#   |  5  |  n  |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 |  ...
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#
+
+				## TODO ##
+
+				}
+
+				6 {
+				#
+				# Domain Name Server
+				#
+				# The domain name server option specifies a list of Domain Name System
+        # (STD 13, RFC 1035 [8]) name servers available to the client.  Servers
+        # SHOULD be listed in order of preference.
+				#
+				#    Code   Len         Address 1               Address 2
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#   |  6  |  n  |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 |  ...
+				#   +-----+-----+-----+-----+-----+-----+-----+-----+--
+				#
+
+				## TODO ##
+
+				}
+
 				12 {
 				#
 				# Host Name
@@ -95,6 +182,25 @@ when CLIENT_DATA {
 					append value $temp_ascii
 				}
 				}
+
+				15 {
+				#
+				# Domain Name
+				#
+				# This option specifies the domain name that client should use when
+        # resolving hostnames via the Domain Name System.
+        #
+				#    Code   Len        Domain Name
+				#   +-----+-----+-----+-----+-----+-----+--
+				#   |  15 |  n  |  d1 |  d2 |  d3 |  d4 |  ...
+				#   +-----+-----+-----+-----+-----+-----+--
+				#
+				for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
+					set temp_hex [string range $value_hex $j [expr {$j + 1}]]
+					set temp_ascii [binary format c* [expr 0x$temp_hex]]
+					append value $temp_ascii
+				}	
+				}
 				
 				50 { 
 				#
@@ -108,8 +214,8 @@ when CLIENT_DATA {
 				#   |  50 |  4  |  a1 |  a2 |  a3 |  a4 |
 				#   +-----+-----+-----+-----+-----+-----+
 				#
-				scan $value_hex %2x%2x%2x%2x a b c d  
-				set value "$a.$b.$c.$d"
+				scan $value_hex %2x%2x%2x%2x a1 a2 a3 a4  
+				set value "$a1.$a2.$a3.$a4"
 				}
 				
 				53 { 
@@ -227,10 +333,22 @@ when CLIENT_DATA {
 				#       |  MBZ  |N|E|O|S|
 				#       +-+-+-+-+-+-+-+-+
 				#
-				
-				
-				
+				#   The two 1-octet RCODE1 and RCODE2 fields are deprecated.  A client
+        #   SHOULD set these to 0 when sending the option and SHOULD ignore them
+        #   on receipt.  A server SHOULD set these to 255 when sending the option
+        #   and MUST ignore them on receipt.
+        #
+
+				binary scan $value_hex a2a4a* flags rcodes fqdn_hex
+
+				set length [string length $fqdn_hex]
+				for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
+					set temp_hex [string range $fqdn_hex $j [expr {$j + 1}]]
+					set temp_ascii [binary format c* [expr 0x$temp_hex]]
+					append value $temp_ascii
 				}
+				}
+
 				
 				255 { 
 				#
