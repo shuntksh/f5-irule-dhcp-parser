@@ -25,7 +25,7 @@
 #
 #
 timing off
-when CLIENT_ACCEPTED priority 100 {
+when RULE_INIT {
 
 	# Rule Name and Version shown in the log
 	set static::RULE_NAME "Simple DHCP Option Sampler v0.1"
