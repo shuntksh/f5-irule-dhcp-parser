@@ -1,3 +1,97 @@
 
-g
-
+Jan  5 03:26:53 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:26:53 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:26:56 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:26:56 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:26:56 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:26:56 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:26:56 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:26:56 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:53(0x35) (1) DHCP_DISCOVER(0x01)
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:50(0x32) (4) 10.1.101.200(0x0a0165c8)
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:34:42 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:55(0x37) (12) (0x010f03062c2e2f1f2179f92b)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:53(0x35) (1) DHCP_REQUEST(0x03)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:50(0x32) (4) 10.1.101.200(0x0a0165c8)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:54(0x36) (4) 10.1.101.150(0x0a016596)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:81(0x51) (10) (0x0000007368756e2d5043)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:34:43 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:55(0x37) (12) (0x010f03062c2e2f1f2179f92b)
+Jan  5 03:34:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:34:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:34:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:34:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:34:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:34:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:34:51 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:34:51 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:34:51 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:34:51 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:34:51 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:34:51 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:53(0x35) (1) DHCP_DISCOVER(0x01)
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:50(0x32) (4) 10.1.101.200(0x0a0165c8)
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:38:59 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:55(0x37) (12) (0x010f03062c2e2f1f2179f92b)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:53(0x35) (1) DHCP_REQUEST(0x03)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:50(0x32) (4) 10.1.101.200(0x0a0165c8)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:54(0x36) (4) 10.1.101.150(0x0a016596)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:81(0x51) (10) (0x0000007368756e2d5043)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:00 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:55(0x37) (12) (0x010f03062c2e2f1f2179f92b)
+Jan  5 03:39:04 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:04 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:39:04 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:04 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:04 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:04 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:39:07 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:07 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:39:07 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:07 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:07 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:07 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:53(0x35) (1) DHCP_DISCOVER(0x01)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:50(0x32) (4) 10.1.101.200(0x0a0165c8)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:55(0x37) (12) (0x010f03062c2e2f1f2179f92b)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule: Simple DHCP Option Sampler v0.1 competed *****
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:53(0x35) (1) DHCP_REQUEST(0x03)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:50(0x32) (4) 10.1.101.200(0x0a0165c8)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:54(0x36) (4) 10.1.101.150(0x0a016596)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:81(0x51) (10) (0x0000007368756e2d5043)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug) Option:55(0x37) (12) (0x010f03062c2e2f1f2179f92b)
+Jan  5 03:39:45 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](0.0.0.0)(debug)  ***** iRule: Simple DHCP Option Sampler v0.1 competed *****
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:39:48 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule: Simple DHCP Option Sampler v0.1 competed *****
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule:  Simple DHCP Option Sampler v0.1 executed *****
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+Jan  5 03:39:52 bigip1 debug tmm1[1151]: Rule /Common/dhcp <CLIENT_DATA>: [dhcp_sampler-0.1](10.1.101.200)(debug)  ***** iRule: Simple DHCP Option Sampler v0.1 competed *****
