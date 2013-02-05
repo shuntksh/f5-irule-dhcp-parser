@@ -19,7 +19,7 @@
 #
 #   References:  RFC 2132 DHCP Options and BOOTP Vendor Extensions
 #                RFC 1533 DHCP Options and BOOTP Vendor Extensions (Obsolated)
-#                 RFC 4702 The Dynamic Host Configuration Protocol (DHCP) Client
+#                RFC 4702 The Dynamic Host Configuration Protocol (DHCP) Client
 #                         Fully Qualified Domain Name (FQDN) Option
 #
 #
@@ -36,7 +36,7 @@ when CLIENT_ACCEPTED priority 100 {
     # Using High-Speed Logging in thie rule
     set log_prefix   "\[$static::RULE_ID\]([IP::client_addr])"
     set log_prefix_d "$log_prefix\(debug\)"
-
+ 
 }
 
 
@@ -56,14 +56,13 @@ when CLIENT_DATA {
         
         set option_hex 0 
         set options_length [expr {([UDP::payload length] -240) * 2 }] 
-
         for {set i 0} {$i < $options_length} {incr i [expr { $length * 2 + 2 }]} { 
 
             # extract option value and convert into decimal
             # for human readability
             binary scan $dhcp_option_payload x[expr $i]a2 option_hex
             set option [expr 0x$option_hex]
-            
+    		
             # move index to get length field 
             incr i 2 
 
@@ -94,6 +93,23 @@ when CLIENT_DATA {
                     }
                 }
                 
+				15 {
+                # Domain Name
+                # This option specifies the domain name that client should use when
+				# resolving hostnames via the Domain Name System.
+				#
+				#    Code   Len        Domain Name
+				#   +-----+-----+-----+-----+-----+-----+--
+				#   |  15 |  n  |  d1 |  d2 |  d3 |  d4 |  ...
+				#   +-----+-----+-----+-----+-----+-----+--
+				#
+                    for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
+                        set temp_hex [string range $value_hex $j [expr {$j + 1}]]
+                        set temp_ascii [binary format c* [expr 0x$temp_hex]]
+                        append value $temp_ascii
+                    }
+                }
+				
                 50 { 
                 # Requested IP Address
                 # This option is used in a client request (DHCPDISCOVER) to allow the
@@ -212,10 +228,57 @@ when CLIENT_DATA {
                 #       |  MBZ  |N|E|O|S|
                 #       +-+-+-+-+-+-+-+-+
                 #
-                
-                
-                
+                # extract the length for suboption, and convert the length from Hex string to decimal 
+
+				# SKIP
+
                 }
+				
+				82 {
+				# Relay Agent Information Option
+				# This document defines a new DHCP Option called the Relay Agent
+				# Information Option.  It is a "container" option for specific agent-
+				# supplied sub-options.  The format of the Relay Agent Information
+				# option is:
+				#
+				#   Code   Len     Agent Information Field
+				#   +------+------+------+------+------+------+--...-+------+
+				#   |  82  |   N  |  i1  |  i2  |  i3  |  i4  |      |  iN  |
+				#   +------+------+------+------+------+------+--...-+------+
+				#
+				# The length N gives the total number of octets in the Agent
+				# Information Field.  The Agent Information field consists of a
+				# sequence of SubOpt/Length/Value tuples for each sub-option, encoded
+				# in the following manner:
+				#
+				#    SubOpt  Len     Sub-option Value
+				#    +------+------+------+------+------+------+--...-+------+
+				#    |  1   |   N  |  s1  |  s2  |  s3  |  s4  |      |  sN  |
+				#    +------+------+------+------+------+------+--...-+------+
+				#    SubOpt  Len     Sub-option Value
+				#    +------+------+------+------+------+------+--...-+------+
+				#    |  2   |   N  |  i1  |  i2  |  i3  |  i4  |      |  iN  |
+				#    +------+------+------+------+------+------+--...-+------+
+				#
+				#   The initial assignment of DHCP Relay Agent Sub-options is as follows:
+				#
+                #        DHCP Agent              Sub-Option Description
+                #        Sub-option Code
+                #        ---------------         ----------------------
+                #            1                   Agent Circuit ID Sub-option
+                #            2                   Agent Remote ID Sub-option
+				#
+				#   Current Version Only Records Circuit ID Sub-option value		
+					set sub1 [string range $value_hex 0 1]
+					set sub1_len_hex [string range $value_hex 2 3]
+					set sub1_length [expr 0x$sub1_len_hex]
+					set sub1_value_hex [string range $value_hex 4 [expr {($sub1_length+2)*2-1}]]
+					for {set j 0} {$j < [expr ($sub1_length * 2)]} {incr j 2} {
+						set temp_hex [string range $sub1_value_hex $j [expr {$j + 1}]]
+						set temp_ascii [binary format c* [expr 0x$temp_hex]]
+						append value $temp_ascii
+					}
+				}
                 
                 255 { 
                 # End Option
