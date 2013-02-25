@@ -1,5 +1,5 @@
 #
-# DHCP Option Field Sampler rev 0.2 (2013/01/03)
+# DHCP Option Field Parser rev 0.3 (2013/02/25)
 #
 #   Written By:  Shunsuke Takahashi (s.takahashi at f5.com)
 #
@@ -10,18 +10,23 @@
 #
 #                [tabe set -subtable dhcp-<framed-ip> <option> <value>]
 #                                                   
+#                Other iRule can use DHCP option value to enrich log message or
+#                make intelligent traffic management decision.
 #
-#   Information: 
+#                Typical usecase is to set different next hop by grouping users
+#                or set different bandwidth control configuration.
 #
+#   Requirement: The rule requires virtual server to listen on DHCP traffic in the
+#                middle either in inline or out of band.
 #
+#                1) In-Line to DHCP traffic
 #
-#   Requirement: 
+#                2) Receiving mirrored DHCP stream
 #
 #   References:  RFC 2132 DHCP Options and BOOTP Vendor Extensions
 #                RFC 1533 DHCP Options and BOOTP Vendor Extensions (Obsolated)
 #                RFC 4702 The Dynamic Host Configuration Protocol (DHCP) Client
 #                         Fully Qualified Domain Name (FQDN) Option
-#
 #
 timing off
 when CLIENT_ACCEPTED priority 100 {
