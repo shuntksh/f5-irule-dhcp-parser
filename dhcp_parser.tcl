@@ -69,8 +69,8 @@ timing off
 when CLIENT_ACCEPTED priority 100 {
 
     # Rule Name and Version shown in the log
-    set static::RULE_NAME "Simple DHCP Option Sampler v0.1"
-    set static::RULE_ID   "dhcp_sampler-0.1"
+    set static::RULE_NAME "Simple DHCP Parser v0.3"
+    set static::RULE_ID   "dhcp_parser"
     
     # 0: No Debug Logging 1: Debug Logging
     set DBG 1
