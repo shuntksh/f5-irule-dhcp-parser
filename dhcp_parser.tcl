@@ -6,53 +6,18 @@
 #   Original By: Jun Chen (j.chen at f5.com)
 #   Original At: https://devcentral.f5.com/community/group/aft/25727/asg/50
 #
-#   Description: 
-#            iRule to demonstrate how tocapture and binary scan UDP payload
-#            and store them into session table for logging enrichment and
-#            intelligent traffic steering decision. 
+#   Description: iRule to demonstrate how tocapture and binary scan UDP payload
+#                and store them into session table for logging enrichment and
+#                intelligent traffic steering decision. 
 #
-#            RFC2131 defines DHCP packet structure. This irule is to scan 
-#            UDP payload and store information into session tables with
-#            your_ip as a key.
+#                RFC2131 defines DHCP packet structure. This irule is to scan 
+#                UDP payload and store information into session tables with
+#                your_ip as a key.
 #
-#            0                   1                   2                   3
-#            0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-#            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-#            |     op (1)    |   htype (1)   |   hlen (1)    |   hops (1)    |
-#            +---------------+---------------+---------------+---------------+
-#            |                            xid (4)                            |
-#            +-------------------------------+-------------------------------+
-#            |           secs (2)            |           flags (2)           |
-#            +-------------------------------+-------------------------------+
-#            |                          ciaddr  (4)                          |
-#            +---------------------------------------------------------------+
-#            |                          yiaddr  (4)                          |
-#            +---------------------------------------------------------------+
-#            |                          siaddr  (4)                          |
-#            +---------------------------------------------------------------+
-#            |                          giaddr  (4)                          |
-#            +---------------------------------------------------------------+
-#            |                                                               |
-#            |                          chaddr  (16)                         |
-#            |                                                               |
-#            |                                                               |
-#            +---------------------------------------------------------------+
-#            |                                                               |
-#            |                          sname   (64)                         |
-#            +---------------------------------------------------------------+
-#            |                                                               |
-#            |                          file    (128)                        |
-#            +---------------------------------------------------------------+
-#            |                                                               |
-#            |                          options (variable)                   |
-#            +---------------------------------------------------------------+
+#                All the optin and value is stored into following session table.
 #
-#
-#            All the optin and value is stored into following session table.
-#
-#                [tabe set -subtable <your_ip_addr> <option> <value>]
+#                          [tabe set -subtable <your_ip_addr> <option> <value>]
 #                                                   
-#                
 #   Requirement: The rule requires virtual server to listen on DHCP traffic in the
 #                middle either in inline or out of band.
 #
