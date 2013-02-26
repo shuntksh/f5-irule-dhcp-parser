@@ -50,7 +50,7 @@
 #
 #            All the optin and value is stored into following session table.
 #
-#            [tabe set -subtable <your_ip_addr> <option> <value>]
+#                [tabe set -subtable <your_ip_addr> <option> <value>]
 #                                                   
 #                
 #   Requirement: The rule requires virtual server to listen on DHCP traffic in the
@@ -346,8 +346,9 @@ when CLIENT_DATA {
                 }
             }
             
+            # Outputs
             table set -subtable $your_ip $option $value
-
+            
             if {$DBG}{log local0.debug "$log_prefix_d Option:$option\(0x$option_hex\)\
                 \($length\) $value\(0x$value_hex\)"}    
         }
