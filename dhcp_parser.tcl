@@ -58,6 +58,34 @@
 #
 #                1) In-Line to DHCP traffic
 #
+#                          profile udp udp_dhcp {
+#                              allow-no-payload disabled
+#                              app-service none
+#                              datagram-load-balancing disabled
+#                              idle-timeout immediate
+#                              ip-tos-to-client 0
+#                              link-qos-to-client 0
+#                              proxy-mss disabled
+#                          }
+#
+#                          ltm virtual vs_dhcp {
+#                              destination 0.0.0.0:bootps
+#                              ip-protocol udp
+#                              mask any
+#                              profiles {
+#                                  udp_dhcp { }
+#                              } 
+#                              rules {
+#                                  dhcp_sampler
+#                              }
+#                              source 0.0.0.0/0
+#                              translate-address disabled
+#                              vlans {
+#                                  local
+#                              }
+#                              vlans-enabled
+#                          }
+#
 #                2) Receiving mirrored DHCP stream
 #
 #   References:  RFC 2132 DHCP Options and BOOTP Vendor Extensions
@@ -93,15 +121,13 @@ when CLIENT_DATA {
         return 
     } else { 
         # BOOTP
-        binary scan [UDP::payload] ccccH8SB1xa4a4a4a4 \
+        binary scan [UDP::payload] ccccH8SB1xa4a4a4a4H2H2H2H2H2H2 \
             msg_type hw_type hw_len hops transaction_id seconds\
             bootp_flags client_ip_hex your_ip_hex server_ip_hex \
-            relay_ip_hex 
+            relay_ip_hex m(a) m(b) m(c) m(d) m(e) m(f)
 
         # Put client address into variables for session key
         set your_ip [IP::addr $your_ip_hex mask 255.255.255.255]
-
-        binary scan [UDP::payload] a2a2a2a2a2a2 (a) m(b) m(c) m(d) m(e) m(f)
         set client_mac "$m(a):$m(b):$m(c):$m(d):$m(e):$m(f)"
         
         binary scan [UDP::payload] H32H64H128H8 \
@@ -110,7 +136,7 @@ when CLIENT_DATA {
         if {$DBG}{log local0.debug "$log_prefix_d  BOOTP: $your_ip $client_mac"}
 
         # DHCP
-        binary scan [UDP::payload] H* dhcp_option_payload 
+        binary scan [UDP::payload] x240H* dhcp_option_payload 
 
         set option_hex 0 
         set options_length [expr {([UDP::payload length] -240) * 2 }] 
