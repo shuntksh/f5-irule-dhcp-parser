@@ -6,16 +6,53 @@
 #   Original By: Jun Chen (j.chen at f5.com)
 #   Original At: https://devcentral.f5.com/community/group/aft/25727/asg/50
 #
-#   Description: Capture DHCP traffic and create user table 
+#   Description: 
+#            iRule to demonstrate how tocapture and binary scan UDP payload
+#            and store them into session table for logging enrichment and
+#            intelligent traffic steering decision. 
 #
-#                [tabe set -subtable dhcp-<framed-ip> <option> <value>]
+#            RFC2131 defines DHCP packet structure. This irule is to scan 
+#            UDP payload and store information into session tables with
+#            your_ip as a key.
+#
+#            0                   1                   2                   3
+#            0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+#            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+#            |     op (1)    |   htype (1)   |   hlen (1)    |   hops (1)    |
+#            +---------------+---------------+---------------+---------------+
+#            |                            xid (4)                            |
+#            +-------------------------------+-------------------------------+
+#            |           secs (2)            |           flags (2)           |
+#            +-------------------------------+-------------------------------+
+#            |                          ciaddr  (4)                          |
+#            +---------------------------------------------------------------+
+#            |                          yiaddr  (4)                          |
+#            +---------------------------------------------------------------+
+#            |                          siaddr  (4)                          |
+#            +---------------------------------------------------------------+
+#            |                          giaddr  (4)                          |
+#            +---------------------------------------------------------------+
+#            |                                                               |
+#            |                          chaddr  (16)                         |
+#            |                                                               |
+#            |                                                               |
+#            +---------------------------------------------------------------+
+#            |                                                               |
+#            |                          sname   (64)                         |
+#            +---------------------------------------------------------------+
+#            |                                                               |
+#            |                          file    (128)                        |
+#            +---------------------------------------------------------------+
+#            |                                                               |
+#            |                          options (variable)                   |
+#            +---------------------------------------------------------------+
+#
+#
+#            All the optin and value is stored into following session table.
+#
+#            [tabe set -subtable <your_ip_addr> <option> <value>]
 #                                                   
-#                Other iRule can use DHCP option value to enrich log message or
-#                make intelligent traffic management decision.
-#
-#                Typical usecase is to set different next hop by grouping users
-#                or set different bandwidth control configuration.
-#
+#                
 #   Requirement: The rule requires virtual server to listen on DHCP traffic in the
 #                middle either in inline or out of band.
 #
@@ -55,10 +92,24 @@ when CLIENT_DATA {
         drop 
         return 
     } else { 
-        # Omit first 240 octet of UDP payload for extracting DHCP
-        # options field 
-        binary scan [UDP::payload] x240H* dhcp_option_payload 
+        # BOOTP
+        binary scan [UDP::payload] ccccH8SB1xa4a4a4a4 \
+            msg_type hw_type hw_len hops transaction_id seconds\
+            bootp_flags client_ip_hex your_ip_hex server_ip_hex \
+            relay_ip_hex 
+
+        # Put client address into variables for session key
+        set your_ip [IP::addr $your_ip_hex mask 255.255.255.255]
+
+        binary scan [UDP::payload] a2a2a2a2a2a2 (a) m(b) m(c) m(d) m(e) m(f)
+        set client_mac "$m(a):$m(b):$m(c):$m(d):$m(e):$m(f)"
         
+        binary scan [UDP::payload] H32H64H128H8 \
+            padding server_host_name boot_file magic_cookie
+        
+        # DHCP
+        binary scan [UDP::payload] H* dhcp_option_payload 
+
         set option_hex 0 
         set options_length [expr {([UDP::payload length] -240) * 2 }] 
         for {set i 0} {$i < $options_length} {incr i [expr { $length * 2 + 2 }]} { 
@@ -235,8 +286,8 @@ when CLIENT_DATA {
                 #
                 # extract the length for suboption, and convert the length from Hex string to decimal 
 
-                # SKIP
-
+                    binary scan $value_hex ccca* flags rcode1 rcode2 domain_name
+                    set value $domain_name
                 }
                 
                 82 {
@@ -273,7 +324,7 @@ when CLIENT_DATA {
                 #            1                   Agent Circuit ID Sub-option
                 #            2                   Agent Remote ID Sub-option
                 #
-                #   Current Version Only Records Circuit ID Sub-option value        
+                #   Current Version Only Extracts Circuit ID Sub-option value        
                     set sub1 [string range $value_hex 0 1]
                     set sub1_len_hex [string range $value_hex 2 3]
                     set sub1_length [expr 0x$sub1_len_hex]
@@ -292,7 +343,9 @@ when CLIENT_DATA {
                     break
                 }
             }
-        
+            
+
+
             if {$DBG}{log local0.debug "$log_prefix_d Option:$option\(0x$option_hex\)\
                 \($length\) $value\(0x$value_hex\)"}    
         }
