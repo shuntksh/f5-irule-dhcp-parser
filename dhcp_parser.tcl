@@ -107,6 +107,8 @@ when CLIENT_DATA {
         binary scan [UDP::payload] H32H64H128H8 \
             padding server_host_name boot_file magic_cookie
         
+        if {$DBG}{log local0.debug "$log_prefix_d  BOOTP: $your_ip $client_mac"}
+
         # DHCP
         binary scan [UDP::payload] H* dhcp_option_payload 
 
@@ -344,7 +346,7 @@ when CLIENT_DATA {
                 }
             }
             
-
+            table set -subtable $your_ip $option $value
 
             if {$DBG}{log local0.debug "$log_prefix_d Option:$option\(0x$option_hex\)\
                 \($length\) $value\(0x$value_hex\)"}    
