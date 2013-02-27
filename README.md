@@ -54,6 +54,16 @@ The rule requires virtual server to listen on DHCP traffic in the middle either 
 
 TBA
 
+## Sample Log
+
+```
+ [dhcp_sampler-0.1](10.1.101.200)(debug) Option:53(0x35) (1) DHCP_INFORM(0x08)
+ [dhcp_sampler-0.1](10.1.101.200)(debug) Option:61(0x3d) (7) 00:50:56:b9:38:74(0x01005056b93874)
+ [dhcp_sampler-0.1](10.1.101.200)(debug) Option:12(0x0c) (7) shun-PC(0x7368756e2d5043)
+ [dhcp_sampler-0.1](10.1.101.200)(debug) Option:60(0x3c) (8) MSFT 5.0(0x4d53465420352e30)
+ [dhcp_sampler-0.1](10.1.101.200)(debug) Option:55(0x37) (13) (0x010f03062c2e2f1f2179f92bfc)
+```
+
 ## Reference
 
 * RFC 2132 DHCP Options and BOOTP Vendor Extensions
