@@ -52,7 +52,7 @@ The rule requires virtual server to listen on DHCP traffic in the middle either 
 
 ## Roadmap
 
-* Add more fields
+* Add more option fields
 
 ## Sample Log
 
