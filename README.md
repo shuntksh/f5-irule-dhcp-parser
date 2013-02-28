@@ -50,9 +50,9 @@ The rule requires virtual server to listen on DHCP traffic in the middle either 
     }
     ```
 
-3. Receiving mirrored DHCP stream
+## Roadmap
 
-    TBA
+* Add more fields
 
 ## Sample Log
 
