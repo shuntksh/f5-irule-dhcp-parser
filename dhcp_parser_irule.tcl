@@ -1,7 +1,7 @@
 #
 # DHCP Option Field Parser rev 0.3 (2013/02/25)
 #
-#   Written By:  Shun Takahashi (s.takahashi at f5.com)
+#   Written By:  Shun Takahashi 
 #
 #   Original By: Jun Chen (j.chen at f5.com)
 #   Original At: https://devcentral.f5.com/community/group/aft/25727/asg/50
