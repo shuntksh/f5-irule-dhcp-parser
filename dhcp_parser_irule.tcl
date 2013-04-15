@@ -130,11 +130,6 @@ when CLIENT_DATA {
                 # This option specifies the name of the client.  The name may or may
                 # not be qualified with the local domain name.
                 #
-                #    Code   Len                 Host Name
-                #   +-----+-----+-----+-----+-----+-----+-----+-----+--
-                #   |  12 |  n  |  h1 |  h2 |  h3 |  h4 |  h5 |  h6 |  ...
-                #   +-----+-----+-----+-----+-----+-----+-----+-----+--
-                #
                     for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
                         set temp_hex [string range $value_hex $j [expr {$j + 1}]]
                         set temp_ascii [binary format c* [expr 0x$temp_hex]]
@@ -146,11 +141,6 @@ when CLIENT_DATA {
                 # Domain Name
                 # This option specifies the domain name that client should use when
                 # resolving hostnames via the Domain Name System.
-                #
-                #    Code   Len        Domain Name
-                #   +-----+-----+-----+-----+-----+-----+--
-                #   |  15 |  n  |  d1 |  d2 |  d3 |  d4 |  ...
-                #   +-----+-----+-----+-----+-----+-----+--
                 #
                     for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
                         set temp_hex [string range $value_hex $j [expr {$j + 1}]]
@@ -164,11 +154,6 @@ when CLIENT_DATA {
                 # This option is used in a client request (DHCPDISCOVER) to allow the
                 # client to request that a particular IP address be assigned.
                 #
-                #    Code   Len          Address
-                #   +-----+-----+-----+-----+-----+-----+
-                #   |  50 |  4  |  a1 |  a2 |  a3 |  a4 |
-                #   +-----+-----+-----+-----+-----+-----+
-                #
                     scan $value_hex %2x%2x%2x%2x a b c d  
                     set value "$a.$b.$c.$d"
                 }
@@ -176,11 +161,6 @@ when CLIENT_DATA {
                 53 { 
                 # DHCP Message Type
                 # This option is used to convey the type of the DHCP message.
-                #
-                #    Code   Len  Type
-                #   +-----+-----+-----+
-                #   |  53 |  1  | 1-7 |
-                #   +-----+-----+-----+
                 #
                     switch $value_hex {
                         01 { set value "DHCP_DISCOVER" }
@@ -202,11 +182,6 @@ when CLIENT_DATA {
                 # servers include this option in the DHCPOFFER in order to allow the
                 # client to distinguish between lease offers
                 #
-                #    Code   Len            Address
-                #  +-----+-----+-----+-----+-----+-----+
-                #  |  54 |  4  |  a1 |  a2 |  a3 |  a4 |
-                #  +-----+-----+-----+-----+-----+-----+
-                #
                     scan $value_hex %2x%2x%2x%2x a b c d  
                     set value "$a.$b.$c.$d"
                 }
@@ -218,11 +193,6 @@ when CLIENT_DATA {
                 # octets, interpreted by servers.  Vendors and sites may choose to
                 # define specific class identifiers to convey particular configuration
                 # or other identification information about a client.
-                #
-                #   Code   Len   Class-Identifier
-                #  +-----+-----+-----+-----+---
-                #  |  60 |  n  |  i1 |  i2 | ...
-                #  +-----+-----+-----+-----+---
                 #
                     for {set j 0} {$j < [expr ($length * 2)]} {incr j 2} {
                         set temp_hex [string range $value_hex $j [expr {$j + 1}]]
@@ -237,11 +207,6 @@ when CLIENT_DATA {
                 # identifier.  DHCP servers use this value to index their database of
                 # address bindings.  This value is expected to be unique for all
                 # clients in an administrative domain.
-                #
-                #   Code   Len   Type  Client-Identifier
-                #   +-----+-----+-----+-----+-----+---
-                #   |  61 |  n  |  t1 |  i1 |  i2 | ...
-                #   +-----+-----+-----+-----+-----+---
                 #
                     binary scan $value_hex a2a* ht id
                     switch $ht {
@@ -265,20 +230,6 @@ when CLIENT_DATA {
                 # option also contains Flags, which DHCP servers can use to convey
                 # information about DNS updates to clients, and two deprecated RCODEs.
                 #
-                #   Code   Len    Flags  RCODE1 RCODE2   Domain Name
-                #   +------+------+------+------+------+------+--
-                #   |  81  |   n  |      |      |      |       ...
-                #   +------+------+------+------+------+------+--
-                #
-                #   The format of the 1-octet Flags field is:
-                #
-                #        0 1 2 3 4 5 6 7
-                #       +-+-+-+-+-+-+-+-+
-                #       |  MBZ  |N|E|O|S|
-                #       +-+-+-+-+-+-+-+-+
-                #
-                # extract the length for suboption, and convert the length from Hex string to decimal 
-
                     binary scan $value_hex ccca* flags rcode1 rcode2 domain_name
                     set value $domain_name
                 }
@@ -286,38 +237,10 @@ when CLIENT_DATA {
                 82 {
                 # Relay Agent Information Option
                 # This document defines a new DHCP Option called the Relay Agent
-                # Information Option.  It is a "container" option for specific agent-
-                # supplied sub-options.  The format of the Relay Agent Information
-                # option is:
+                # Information Option.  
                 #
-                #   Code   Len     Agent Information Field
-                #   +------+------+------+------+------+------+--...-+------+
-                #   |  82  |   N  |  i1  |  i2  |  i3  |  i4  |      |  iN  |
-                #   +------+------+------+------+------+------+--...-+------+
+                # Current version of this iRule only extracts Circuit ID Sub-option value        
                 #
-                # The length N gives the total number of octets in the Agent
-                # Information Field.  The Agent Information field consists of a
-                # sequence of SubOpt/Length/Value tuples for each sub-option, encoded
-                # in the following manner:
-                #
-                #    SubOpt  Len     Sub-option Value
-                #    +------+------+------+------+------+------+--...-+------+
-                #    |  1   |   N  |  s1  |  s2  |  s3  |  s4  |      |  sN  |
-                #    +------+------+------+------+------+------+--...-+------+
-                #    SubOpt  Len     Sub-option Value
-                #    +------+------+------+------+------+------+--...-+------+
-                #    |  2   |   N  |  i1  |  i2  |  i3  |  i4  |      |  iN  |
-                #    +------+------+------+------+------+------+--...-+------+
-                #
-                #   The initial assignment of DHCP Relay Agent Sub-options is as follows:
-                #
-                #        DHCP Agent              Sub-Option Description
-                #        Sub-option Code
-                #        ---------------         ----------------------
-                #            1                   Agent Circuit ID Sub-option
-                #            2                   Agent Remote ID Sub-option
-                #
-                #   Current Version Only Extracts Circuit ID Sub-option value        
                     set sub1 [string range $value_hex 0 1]
                     set sub1_len_hex [string range $value_hex 2 3]
                     set sub1_length [expr 0x$sub1_len_hex]
@@ -333,6 +256,7 @@ when CLIENT_DATA {
                 # End Option
                 # The end option marks the end of valid information in the vendor
                 # field.  Subsequent octets should be filled with pad options.
+                #
                     break
                 }
             }
